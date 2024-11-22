@@ -11,8 +11,8 @@ import retrofit2.http.Query
 interface APIService {
     @GET("recipes/{id}/information")
     suspend fun getRecipesById(
-       @Query("apiKey") apiKey:String,
-       @Path("id") id: Int
+        @Path("id") id: Int,
+        @Query("apiKey") apiKey:String
    ):Response<RecipeIDResult>
     @GET("recipes/complexSearch")
     suspend fun getRecipes(

@@ -8,6 +8,7 @@ import com.example.parcial12.database.RecipeEntity
 import com.example.parcial12.databinding.ItemHorizontalRecipesBinding
 import com.example.parcial12.databinding.ItemRecipesBinding
 import com.example.parcial12.model.Results
+import com.example.parcial12.viewmodel.RecipesViewModel
 
 import com.squareup.picasso.Picasso
 
@@ -17,16 +18,14 @@ class RecipesHViewHolder(private val binding : ItemHorizontalRecipesBinding) : R
     fun bind(recipe: Results){
         binding.tvTitle.text = recipe.title
         Picasso.get().load(recipe.image).into(binding.ivRecipes)
-
         binding.btnSave.setOnClickListener() {
             val builder = AlertDialog.Builder(itemView.context)
             builder.setTitle("Confirmar Guardado")
             builder.setMessage("Quiere guardar esta receta?")
             builder.setPositiveButton("Sí") { dialog, which ->
                 Toast.makeText(binding.root.context, "Receta guardada", Toast.LENGTH_SHORT).show()
-                val recipeEntity = RecipeEntity(recipe.id, recipe.title, recipe.image)
-                val recipeDao = AppDatabase.getDatabase(binding.root.context).recipeDao()
-                recipeDao.insert(recipeEntity)
+                    val recipe = RecipeEntity(recipe.id, recipe.title, recipe.image)
+
             }
             builder.setNegativeButton("Cancelar") { dialog, which ->
                 dialog.dismiss()

@@ -34,7 +34,7 @@ class FragmentRecipes : Fragment() {
             onDetailClick(recipeId)
         }
 
-        binding.rvRecipes.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvRecipes.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvRecipes.adapter = adapter
 
         viewModel = ViewModelProvider(requireActivity()).get(RecipesViewModel::class.java).apply {
@@ -56,6 +56,7 @@ fun onDetailClick(recipeId: Int) {
                 binding.tvRecipeName.text = recipeDetails?.title
                 binding.tvRecipeDescription.text = recipeDetails?.summary
                 Picasso.get().load(recipeDetails?.image).into(binding.ivRecipe)
+                println("Detalles de la receta: ${recipeDetails?.title}")
         }
 
     }

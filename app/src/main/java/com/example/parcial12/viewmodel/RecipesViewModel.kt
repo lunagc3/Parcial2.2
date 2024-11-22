@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.parcial12.database.RecipeDao
+import com.example.parcial12.database.RecipeEntity
 import com.example.parcial12.model.RecipeIDResult
 import com.example.parcial12.model.RecipeRepository
 import com.example.parcial12.model.RecipeResult
@@ -13,6 +15,7 @@ import com.example.parcial12.model.Results
 import com.squareup.picasso.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 
@@ -38,15 +41,18 @@ class RecipesViewModel() : ViewModel(){
             try {
                 val response : Response<RecipeIDResult> = repository.getRecipeDetails(apiKey, recipeId)
                 if(response.isSuccessful){
-                    _recipeDetails.value = response.body()
+                    withContext(Dispatchers.Main) {
+                        _recipeDetails.postValue(response.body())
+                        println("Detalles de la receta: ${response.body()}")
+                    }
                 }else{
                     throw Exception("error al solicitar detalles")
                 }
             } catch (e: Exception) {
                 error.postValue("Hubo un error")
+                println("Error: ${e.message}")
             }
         }
     }
-
 
 }

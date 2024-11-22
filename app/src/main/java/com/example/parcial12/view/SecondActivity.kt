@@ -42,13 +42,14 @@ class SecondActivity : AppCompatActivity() {
             this.repository = repository
         }
         adapter = RecipesHAdapter()
+
         viewModel.fetchRecipes(apiKey,null)
 
         viewModel.recipes.observe(this, { recipe->
             adapter.updateRecipes(recipe)
         })
 
-        binding.rvRecipes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvRecipes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvRecipes.adapter = adapter
 
 

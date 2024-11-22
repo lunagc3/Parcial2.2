@@ -15,7 +15,7 @@ class RecipeRepository (private val apiService: APIService) {
         }
 
         suspend fun getRecipeDetails(apiKey: String, recipeId: Int): Response<RecipeIDResult> {
-                val response = apiService.getRecipesById(apiKey, recipeId)
+                val response = apiService.getRecipesById(recipeId, apiKey)
                 if (response.isSuccessful) {
                         return response
                 } else {

@@ -7,6 +7,7 @@ import com.example.parcial12.R
 import com.example.parcial12.databinding.ItemHorizontalRecipesBinding
 import com.example.parcial12.databinding.ItemRecipesBinding
 import com.example.parcial12.model.Results
+import com.example.parcial12.viewmodel.RecipesViewModel
 
 
 class RecipesHAdapter() : RecyclerView.Adapter<RecipesHViewHolder>() {
