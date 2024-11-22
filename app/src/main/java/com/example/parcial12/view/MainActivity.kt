@@ -45,5 +45,9 @@ class MainActivity : AppCompatActivity() {
             transaction.replace(R.id.fragment_container, FragmentRecipes())
             transaction.commit()
         }
+        binding.btnRv.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

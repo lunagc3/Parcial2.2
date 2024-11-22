@@ -1,6 +1,7 @@
 package com.example.parcial12.viewmodel
 
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import com.example.parcial12.model.RecipeRepository
 import com.example.parcial12.model.RecipeResult
 import com.example.parcial12.model.Results
 import com.squareup.picasso.BuildConfig
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -31,8 +33,8 @@ class RecipesViewModel() : ViewModel(){
             }
         }
     }
-    fun fetchRecipeDetails(apiKey: String, recipeId: Int) : LiveData<RecipeIDResult?> {
-        viewModelScope.launch {
+  fun fetchRecipeDetails(apiKey: String, recipeId: Int) {
+        viewModelScope.launch (Dispatchers.IO){
             try {
                 val response : Response<RecipeIDResult> = repository.getRecipeDetails(apiKey, recipeId)
                 if(response.isSuccessful){
@@ -44,7 +46,6 @@ class RecipesViewModel() : ViewModel(){
                 error.postValue("Hubo un error")
             }
         }
-        return recipeDetails
     }
 
 

@@ -29,10 +29,8 @@ class FragmentRecipes : Fragment() {
         binding = FragmentRecipesBinding.inflate(inflater, container, false)
         val apiKey = BuildConfig.API_KEY
         val repository = RecipeRepository(RetrofitInstance.api)
-        adapter = RecipesAdapter{ recipeId ->
-            onDetailClick(recipeId)
-        }
-        adapter.setOnItemClickListener { recipeId ->
+
+        adapter = RecipesAdapter { recipeId ->
             onDetailClick(recipeId)
         }
 
@@ -50,16 +48,14 @@ class FragmentRecipes : Fragment() {
 
         return binding.root
     }
-    fun onDetailClick(recipeId: Int) {
-        viewModel.fetchRecipeDetails(BuildConfig.API_KEY, recipeId).observe(viewLifecycleOwner) { recipeDetails ->
-            if (recipeDetails != null) {
-                binding.tvRecipeName.text = recipeDetails.title
-                binding.tvRecipeDescription.text = recipeDetails.summary
-                Picasso.get().load(recipeDetails.image).into(binding.ivRecipe)
-                binding.detailContainer.visibility = View.VISIBLE
-            } else {
-                Toast.makeText(requireContext(), "Error al obtener los detalles", Toast.LENGTH_SHORT).show()
-            }
+fun onDetailClick(recipeId: Int) {
+      //  Toast.makeText(requireContext(), "ID de la receta: $recipeId", Toast.LENGTH_SHORT).show()
+        viewModel.fetchRecipeDetails(BuildConfig.API_KEY, recipeId)
+            viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
+                binding.recipeDetailContainer.visibility = View.VISIBLE
+                binding.tvRecipeName.text = recipeDetails?.title
+                binding.tvRecipeDescription.text = recipeDetails?.summary
+                Picasso.get().load(recipeDetails?.image).into(binding.ivRecipe)
         }
 
     }
